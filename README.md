@@ -25,7 +25,7 @@ Run tests by loading the test file, e.g., `swipl test/models/emf.pl`
 and executing `?- run_tests.`. If you want to execute a single unit test specify
 the test by its qualified name, e.g., `?- run_tests(ok_relation:part_of).`.
 
-We test the KB for the emf model `src/models/emf.pl against the constraints
+We test the KB for the emf model `src/models/emf.pl` against the constraints
 implemented in `src/solasote/ok_type.pl` and `src/solasote/ok_relation.pl`.
 
 Tests follow this pattern:
