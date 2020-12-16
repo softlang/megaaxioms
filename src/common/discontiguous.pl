@@ -1,0 +1,24 @@
+% The Prolog files are tailored towards understandability of the domain-specific KB.
+:- discontiguous entity/1.
+:- discontiguous fragment/1.
+:- discontiguous file/1.
+:- discontiguous system/1.
+:- discontiguous language/1.
+:- discontiguous function/1.
+:- discontiguous transient/1.
+:- discontiguous trace/1.
+:- discontiguous part_of/2.
+:- discontiguous element_of/2.
+:- discontiguous implement/2.
+:- discontiguous encodes/2.
+:- discontiguous resolves_to/2.
+:- discontiguous refers_to/2.
+:- discontiguous defines/2.
+:- discontiguous fun_type/2.
+:- discontiguous fun_apply/2.
+:- discontiguous same_as/2.
+:- discontiguous corresponds_to/2.
+:- discontiguous conforms_to/2.
+:- discontiguous subset_of/2.
+:- discontiguous uses/2.
+:- discontiguous complies_to/2.
