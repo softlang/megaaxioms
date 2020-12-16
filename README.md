@@ -5,18 +5,28 @@ It serves as further evaluation of a revised version of the axiomatization descr
 
 ## Loading
 
-Load EMF model using `swipl src/models/emf.pl`
+Load EMF model using `swipl src/models/emf.pl`. 
+It demonstrates SoLaSote as a whole and covers all types and relations.
+
+Load EMF conformance trace model by using `swipl src/models/emf_trace_conformance.pl`
+and the EMF code generation trace model by using `swipl src/models/emf_trace_generate.pl`.
+They demonstrate the extended formalization of traceability.
+
+Load Django model using `swipl src/models/django.pl`.
+The Django model demonstrates maximum inference. Hence, any facts
+that can be inferred based on `src/solasote/inference.pl` are not stated
+explicitly.
 
 Use `halt.` to stop the SWIPL session.
 
 ## Testing
 
-Run tests by loading the test file `swipl test/models/emf.pl`
+Run tests by loading the test file, e.g., `swipl test/models/emf.pl`
 and executing `?- run_tests.`. If you want to execute a single unit test specify
 the test by its qualified name, e.g., `?- run_tests(ok_relation:part_of).`.
 
-We test the KB for the emf model src/models/emf.pl against the constraints
-implemented in src/common/ok_type.pl and src/common/ok_relation.pl.
+We test the KB for the emf model `src/models/emf.pl against the constraints
+implemented in `src/solasote/ok_type.pl` and `src/solasote/ok_relation.pl`.
 
 Tests follow this pattern:
 
