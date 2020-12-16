@@ -215,4 +215,4 @@ defines("https://docs.oracle.com/javase/specs/",java).
 defines("https://docs.oracle.com/javase/specs/",java_package).
 
 % The EMF module demonstrates the use of every axiom from the paper.
-:- include("../../src/common/solasote.pl").
+:- include("../../src/common/inference.pl").

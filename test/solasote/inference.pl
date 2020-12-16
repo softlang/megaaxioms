@@ -1,4 +1,4 @@
-:- include("../../src/common/solasote.pl").
+:- include("../../src/solasote/inference.pl").
 
 :- begin_tests(element_of).
 

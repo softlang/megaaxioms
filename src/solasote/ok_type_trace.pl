@@ -1,5 +1,5 @@
 :- discontiguous(ok_type/1).
-:- include("../../src/common/ok_type.pl").
+:- include("../../src/solasote/ok_type.pl").
 
 ok_type(reference(R)):-
   encodes(_,R), resolves_to(R,_).

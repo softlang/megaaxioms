@@ -67,6 +67,12 @@ ok_relation(complies_to(S,A)):-
   artifact(A), defines(A,C),
   (uses(S,C);facilitates(S,C)).
 
+% simplification for informal specifications
+ok_element_of(element_of(_,html)):- !.
+ok_element_of(element_of(_,pdf)):- !.
+ok_element_of(element_of(_,java)):- !.
+ok_element_of(element_of(_,python)):- !.
+
 % helper predicates
 ok_element_of(element_of(A,L)):-
     defines(SPEC,L), conforms_to(A,SPEC).
@@ -76,12 +82,6 @@ ok_element_of(element_of(A,L)):-
     zip(Is,Ds,IsDs), zip(Os,Rs,OsRs),
     (member((A,L),IsDs); member((A,L),OsRs)).
 
-% simplification for informal specifications
-ok_element_of(element_of(_,html)):- !.
-ok_element_of(element_of(_,pdf)):- !.
-ok_element_of(element_of(_,java)):- !.
-ok_element_of(element_of(_,python)):- !.
-
 okDirected(corresponds_to(A1,A2)):-
   forall(part_of(P1,A1),(part_of(P2,A2),
       corresponds_to(P1,P2))),!.
@@ -90,4 +90,5 @@ okDirected(corresponds_to(A1,A2)):-
   not(part_of(_,A1);part_of(_,A2)),
   same_as(A1,A2).
 
-
+zip([],[],[]).
+zip([X|XS],[Y|YS],[(X,Y)|ZS]) :- zip(XS,YS,ZS).

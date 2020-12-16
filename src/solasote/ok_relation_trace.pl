@@ -1,5 +1,5 @@
 :- discontiguous(ok_relation/1).
-:- include("../../src/common/ok_relation.pl").
+:- include("../../src/solasote/ok_relation.pl").
 
 ok_relation(encodes(A,R)):-
   artifact(A), reference(R).

@@ -1,4 +1,4 @@
-% The Prolog files are tailored towards understandability of the domain-specific KB.
+% The Prolog files are tailored towards understandability of the technology-specific KB.
 :- discontiguous entity/1.
 :- discontiguous fragment/1.
 :- discontiguous file/1.

@@ -10,9 +10,6 @@ artifact(X) :- fragment(X).
 artifact(X) :- transient(X).
 system(X) :- technology(X).
 
-zip([],[],[]).
-zip([X|XS],[Y|YS],[(X,Y)|ZS]) :- zip(XS,YS,ZS).
-
 %shortcuts for demos
 part_ofT(A1,A1).
 part_ofT(A1,A2) :- part_of(A1,A2).
@@ -25,7 +22,12 @@ element_of(+A,-L) :- conforms_to(+A,SPEC), defines(SPEC, -L),!.
 element_ofT(A,L) :- element_of(A,L),!.
 element_ofT(A,L) :- element_of(A,L2), subset_ofT(L2,L).
 
+% implementation of language.
+implement(S,L):- language(L), fun_type(F,(Ds,Rs)), implement(S,F),
+    (member(L,Ds);member(L,Rs)).
 implement(SYS,LC) :- subset_of(LC,L), implement(SYS,L).
+
+function(F) :- fun_type(F,_).
 
 subset_ofT(L,L).
 subset_ofT(L1,L2) :- subset_of(L1,L2).
@@ -62,9 +64,3 @@ uses(W,C):- part_of(P,W),
 uses(W,C):- part_of(P,W),
     conforms_to(P,SPEC),
     defines(SPEC,C).
-
-% implementation of language.
-implement(S,L):- language(L), fun_type(F,(Ds,Rs)), implement(S,F),
-    (member(L,Ds);member(L,Rs)).
-
-function(F) :- fun_type(F,_).

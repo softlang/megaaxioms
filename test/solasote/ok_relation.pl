@@ -1,4 +1,4 @@
-:- include("../../src/common/ok_relation.pl").
+:- include("../../src/solasote/ok_relation.pl").
 
 :- begin_tests(ok_relation).
 

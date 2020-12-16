@@ -1,4 +1,4 @@
-:- include("../../src/common/ok_type.pl").
+:- include("../../src/solasote/ok_type.pl").
 
 :- begin_tests(ok_type).
 

@@ -1,6 +1,6 @@
 :- include("../../src/models/django.pl").
-:- include("../../test/common/ok_type.pl").
-:- include("../../test/common/ok_relation.pl").
+:- include("../../test/solasote/ok_type.pl").
+:- include("../../test/solasote/ok_relation.pl").
 
 % The Django model contains less hard coded "Prolog facts". We test that additional facts can be inferred.
 :- begin_tests(infer).

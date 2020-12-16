@@ -1,8 +1,8 @@
-:- include("../../src/common/ok_type_trace.pl").
-:- include("../../src/common/ok_relation_trace.pl").
+:- include("../../src/solasote/ok_type_trace.pl").
+:- include("../../src/solasote/ok_relation_trace.pl").
 :- include("../../src/models/emf_trace_conformance.pl").
-:- include("../../test/common/ok_type.pl").
-:- include("../../test/common/ok_relation.pl").
+:- include("../../test/solasote/ok_type.pl").
+:- include("../../test/solasote/ok_relation.pl").
 
 :- begin_tests(ok_conformance_trace).
 
