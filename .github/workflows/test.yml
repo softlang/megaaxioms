@@ -21,3 +21,9 @@ jobs:
         uses: actions/checkout@v1
       - name: Run EMF tests
         run: swipl -g "run_tests" -t halt test/models/emf.pl
+      - name: Run EMF trace conformance tests
+        run: swipl -g "run_tests" -t halt test/models/emf_trace_conformance.pl
+      - name: Run EMF trace generator tests
+        run: swipl -g "run_tests" -t halt test/models/emf_trace_generate.pl
+      - name: Run Django tests
+        run: swipl -g "run_tests" -t halt test/models/django.pl
