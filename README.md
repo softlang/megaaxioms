@@ -1,3 +1,5 @@
+![Test CI](https://github.com/softlang/megaaxioms/workflows/Test/badge.svg)
+
 # Axiom-based Formalization of Megamodels
 
 This project allows development of Prolog-based megamodels for SoLaSoTe.
