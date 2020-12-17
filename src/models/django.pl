@@ -46,4 +46,4 @@ facilitates(django,django_model_class).
 uses("polls/models.py",django_model_class).
 complies_to("polls/models.py","https://docs.djangoproject.com/en/3.1/ref/models/class").
 
-:- include("../../src/solasote/solasote.pl").
+:- include("../../src/solasote/inference.pl").
