@@ -17,11 +17,7 @@ jobs:
           swi-prolog-version: latest
       - name: Run trivial sanity test
         run: swipl -g true -t halt
-      - name: Install Logtalk
-        uses: logtalk-actions/setup-logtalk@master
-        with:
-          logtalk-version: latest
       - name: Checkout application to be tested
         uses: actions/checkout@v1
-      - name: Run Logtalk tests
-        run: cd "test" && logtalk_tester -p swi
+      - name: Run EMF tests
+        run: swipl test/models/emf.pl
