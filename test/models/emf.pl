@@ -8,5 +8,3 @@ test(failing) :-
   1 == 2.
 
 :- end_tests(ci).
-
-:- run_tests.
