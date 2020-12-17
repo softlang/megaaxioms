@@ -20,4 +20,4 @@ jobs:
       - name: Checkout application to be tested
         uses: actions/checkout@v1
       - name: Run EMF tests
-        run: swipl test/models/emf.pl
+        run: swipl test/models/emf.pl | grep -q 'ERROR' && exit 1
