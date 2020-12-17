@@ -1,0 +1,23 @@
+name: Test
+# credit goes to https://github.com/logtalk-actions/setup-swi-prolog
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest]
+    steps:
+      - name: Install SWI-Prolog
+        uses: logtalk-actions/setup-swi-prolog@master
+        with:
+          swi-prolog-branch: stable
+          swi-prolog-version: latest
+      - name: Run trivial sanity test
+        run: swipl -g true -t halt
+      - name: Checkout application to be tested
+        uses: actions/checkout@v1
+      - name: Run EMF tests
+        run: swipl test/models/emf.pl
