@@ -1,14 +1,15 @@
-:- include("../../src/common/discontiguous.pl").
+:- include("../../src/solasote/discontiguous.pl").
 
 % Artifact Instances
-folder("org.eclipse.emf.ecore").              % package of the metametamodel.
-folder("com.example.po").                     % package of the generated Java code
-file("org.eclipse.emf.ecore.EObject.java").   % file of the metametamodel class EObject.
-file("org.eclipse.emf.ecore.EPackage.java").  % file of the metametamodel class EPackage.
-file("SimplePO.ecore").                       % file of the metamodel for purchase orders.
-file("SimplePO.genmodel").                    % file of the generator model.
-transient(christmas_order_object).            % transient instance of a purchase order metamodel.
-file("christmas_simplepo.xmi").               % persisted instance of a purchase order metamodel.
+folder("org.eclipse.emf.ecore").              % metametamodel is a folder.
+folder("com.example.po").                     % the Java object model package is a folder.
+file("org.eclipse.emf.ecore.EObject.java").   % the class EObject is a file.
+file("org.eclipse.emf.ecore.EPackage.java").  % the class EPackage is a file.
+file("SimplePO.ecore").                       % the Ecore model for purchase orders is a file.
+file("SimplePO.genmodel").                    % the generator model is a file.
+transient(christmas_order_object).            % the purchase order object is a transient.
+file("christmas_simplepo.xmi").               % the persisted purchase order object is a file.
+fragment("SimplePO.ecore/PurchaseOrder").     % the PurchaseOrder EClass is a fragment.
 
 % Languages interpreted as sets of artifacts
 language(xml).                % the set of all XML artifacts
@@ -39,14 +40,14 @@ subset_of(simplepo_xmi,xmi).
 subset_of(ecore_java,java).
 subset_of(ecore_java_package,java_package).
 
-technology(emf).
-technology(emf_core).
-technology(emf_persistence).
-technology(emf_generator).
-technology(javac).
-technology(jvm).
-system(simplepo_app).
-system("simplepo_app.edit").
+technology(emf).              % EMF is a technology.
+technology(emf_core).         % The Core component is a technology.
+technology(emf_persistence).  % The persistence component is a technology.
+technology(emf_generator).    % The generator component is a technology.
+technology(javac).            % javac is a technology.
+technology(jvm).              % JVM is a technology.
+system(simplepo_app).         % the SimplePO demo app is a system.
+system("simplepo_app.edit").  % The edit component of SimplePO is a sytem.
 
 part_of(emf_core,emf).
 part_of(emf_persistence,emf).
@@ -83,7 +84,6 @@ implement(jvm,jvm_objects).
 %Conformance scenario set up fragments
 fragment("christmas_simplepo.xmi/order").
 element_of("christmas_simplepo.xmi/order",purchase_order_xmi).
-fragment("SimplePO.ecore/PurchaseOrder").
 element_of("SimplePO.ecore/PurchaseOrder",eclass_xmi).
 defines("SimplePO.ecore/PurchaseOrder",purchase_order_xmi).
 fragment("christmas_simplepo.xmi/order/item[0]").
@@ -215,4 +215,4 @@ defines("https://docs.oracle.com/javase/specs/",java).
 defines("https://docs.oracle.com/javase/specs/",java_package).
 
 % The EMF module demonstrates the use of every axiom from the paper.
-:- include("../../src/common/inference.pl").
+:- include("../../src/solasote/inference.pl").

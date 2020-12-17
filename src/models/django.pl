@@ -1,7 +1,7 @@
 % This module is dedicated to testing inference rules
 % that enable abbreviated writing forms.
 
-:- include("../../src/common/discontiguous.pl").
+:- include("../../src/solasote/discontiguous.pl").
 
 % system and technology
 technology(django).
@@ -46,4 +46,4 @@ facilitates(django,django_model_class).
 uses("polls/models.py",django_model_class).
 complies_to("polls/models.py","https://docs.djangoproject.com/en/3.1/ref/models/class").
 
-:- include("../../src/common/solasote.pl").
+:- include("../../src/solasote/solasote.pl").
