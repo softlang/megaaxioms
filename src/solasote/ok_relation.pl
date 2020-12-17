@@ -9,6 +9,12 @@ ok_relation(part_of(P,W)):-
 ok_relation(part_of(P,W)):-
   fragment(W), fragment(P).
 
+% simplification for informal specifications
+ok_relation(element_of(_,html)):- !.
+ok_relation(element_of(_,pdf)):- !.
+ok_relation(element_of(_,java)):- !.
+ok_relation(element_of(_,python)):- !.
+
 ok_relation(element_of(A,L)):-
   artifact(A), language(L),
   defines(SPEC,L),
@@ -20,13 +26,7 @@ ok_relation(element_of(A,L)):-
   fun_apply(F,(Is,Os)),
   zip(Is,Ds,IsDs), zip(Os,Rs,OsRs),(
   member((A,L),IsDs);
-  member((A,L),OsRs)).  
-
-% simplification for informal specifications
-ok_element_of(element_of(_,html)):- !.
-ok_element_of(element_of(_,pdf)):- !.
-ok_element_of(element_of(_,java)):- !.
-ok_element_of(element_of(_,python)):- !.
+  member((A,L),OsRs)).
 
 % helper predicates
 
