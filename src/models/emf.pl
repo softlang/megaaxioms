@@ -12,27 +12,26 @@ file("christmas_simplepo.xmi").               % the persisted purchase order obj
 fragment("SimplePO.ecore/PurchaseOrder").     % the PurchaseOrder EClass is a fragment.
 
 % Languages interpreted as sets of artifacts
-language(xml).                % the set of all XML artifacts
 language(xmi).                % the set of all XMI artifacts
 language(java).               % the set of all Java artifacts
 language(java_package).       % the set of all Java packages
 language(jvm_objects).        % the set of all objects at JVM runtime
-language(ecore_java).         % the set of all Java artifacts derived from an Ecore model
-language(ecore_xmi).          % the set of all Ecore models
-language(genmodel_xmi).       % the set of all generator models
-language(simplepo_xmi).       % the set of all purchase orders in XMI
-language(ecore_java_package). % the set of all java packages based on an ecore model
 
 % Set membership
 element_of("org.eclipse.emf.ecore",java_package).
 element_of("org.eclipse.emf.ecore.EObject.java",java).
 element_of("org.eclipse.emf.ecore.EPackage.java",java).
-element_of("SimplePO.ecore",ecore_xmi).
-element_of("SimplePO.genmodel",genmodel_xmi).
+element_of("SimplePO.ecore",xmi).
+element_of("SimplePO.genmodel",xmi).
 element_of(christmas_order_object,jvm_objects).
-element_of("christmas_simplepo.xmi",simplepo_xmi).
+element_of("christmas_simplepo.xmi",xmi).
 element_of("com.example.po",java_package).
-element_of("com.example.po",ecore_java_package).
+
+language(ecore_java).         % the set of all Java artifacts derived from an Ecore model
+language(ecore_xmi).          % the set of all Ecore models
+language(genmodel_xmi).       % the set of all generator models
+language(simplepo_xmi).       % the set of all purchase orders in XMI
+language(ecore_java_package). % the set of all java packages based on an ecore model
 
 % Subset relationships
 subset_of(ecore_xmi,xmi).
@@ -40,27 +39,38 @@ subset_of(simplepo_xmi,xmi).
 subset_of(ecore_java,java).
 subset_of(ecore_java_package,java_package).
 
-technology(emf).              % EMF is a technology.
-technology(emf_core).         % The Core component is a technology.
-technology(emf_persistence).  % The persistence component is a technology.
-technology(emf_generator).    % The generator component is a technology.
-technology(javac).            % javac is a technology.
-technology(jvm).              % JVM is a technology.
-system(simplepo_app).         % the SimplePO demo app is a system.
-system("simplepo_app.edit").  % The edit component of SimplePO is a sytem.
+% Subset membership
+element_of("org.eclipse.emf.ecore",ecore_java_package).
+element_of("org.eclipse.emf.ecore.EObject.java",ecore_java).
+element_of("org.eclipse.emf.ecore.EPackage.java",ecore_java).
+element_of("SimplePO.ecore",ecore_xmi).
+element_of("SimplePO.genmodel",genmodel_xmi).
+element_of(christmas_order_object,jvm_objects).
+element_of("christmas_simplepo.xmi",simplepo_xmi).
+element_of("com.example.po",ecore_java_package).
+
+system(simplepo_app).          % the SimplePO demo app is a system.
+system(simplepo_app_model).    % SimplePO has a model subsystem.
+system(simplepo_app_edit).     % SimplePO has an edit subsystem.
+technology(javac).             % javac is a technology.
+technology(jvm).               % JVM is a technology.
+technology(emf).               % EMF is a technology.
+technology(emf_core).          % EMF has a core subsystem.
+technology(emf_persistence).   % EMF has a persistence subsystem.
+technology(emf_code_generator).% EMF has a code generator subsystem.
+
+part_of(simplepo_app_edit,simplepo_app).
+part_of(simplepo_app_model,simplepo_app).
+part_of("SimplePO.ecore",simplepo_app_model).
+part_of("SimplePO.ecore/PurchaseOrder","SimplePO.ecore").
+part_of("SimplePO.genmodel", simplepo_app_model).
+part_of("christmas_simplepo.xmi", simplepo_app_model).
 
 part_of(emf_core,emf).
 part_of(emf_persistence,emf).
-part_of("simplepo_app.edit",simplepo_app).
-
 part_of("org.eclipse.emf.ecore",emf_core).
 part_of("org.eclipse.emf.ecore.EObject.java","org.eclipse.emf.ecore").
 part_of("org.eclipse.emf.ecore.EPackage.java","org.eclipse.emf.ecore").
-
-part_of("SimplePO.ecore",simplepo_app).
-part_of("SimplePO.genmodel", simplepo_app).
-part_of("christmas_simplepo.xmi", simplepo_app).
-part_of("SimplePO.ecore/PurchaseOrder","SimplePO.ecore").
 
 % simplified conformance to basic languages
 conforms_to("org.eclipse.emf.ecore","https://docs.oracle.com/javase/specs/").
@@ -71,12 +81,12 @@ conforms_to("com.example.po","https://docs.oracle.com/javase/specs/").
 %implementation of functions
 implement(emf_persistence,save_model).
 implement(emf_persistence,load_model).
-implement(emf_generator,generate_code).
+implement(emf_code_generator,generate_code).
 
 %implementation of languages
 implement(emf_persistence,ecore_xmi).
 implement(emf_persistence,genmodel_xmi).
-implement(emf_generator,ecore_java).
+implement(emf_code_generator,ecore_java).
 implement(javac,java).
 implement(javac,java_package).
 implement(jvm,jvm_objects).
@@ -103,10 +113,12 @@ implement(emf,eclass_xmi).
 %Traceable Conformance
 conforms_to("christmas_simplepo.xmi","SimplePO.ecore").
 part_of("christmas_simplepo.xmi/order","christmas_simplepo.xmi").
-%part_of("SimplePO.ecore/PurchaseOrder","SimplePO.ecore").
+%part_of("SimplePO.ecore/PurchaseOrder","SimplePO.ecore"). is stated earlier.
 conforms_to("christmas_simplepo.xmi/order","SimplePO.ecore/PurchaseOrder").
-part_of("christmas_simplepo.xmi/order/item[0]","christmas_simplepo.xmi/order").
-part_of("christmas_simplepo.xmi/order/item[1]","christmas_simplepo.xmi/order").
+part_of("christmas_simplepo.xmi/order/item[0]",
+  "christmas_simplepo.xmi/order").
+part_of("christmas_simplepo.xmi/order/item[1]",
+  "christmas_simplepo.xmi/order").
 part_of("SimplePO.ecore/Item","SimplePO.ecore").
 conforms_to("christmas_simplepo.xmi/order/item[0]","SimplePO.ecore/Item").
 conforms_to("christmas_simplepo.xmi/order/item[1]","SimplePO.ecore/Item").
@@ -140,10 +152,14 @@ same_as("christmas_order_object.order.item[1]","christmas_simplepo.xmi/order/ite
 %Correspondence - Traceable
 corresponds_to(christmas_order_object,"christmas_simplepo.xmi").
 corresponds_to("christmas_order_object.order","christmas_simplepo.xmi/order").
-corresponds_to("christmas_order_object.order.item[0]","christmas_simplepo.xmi/order/item[0]").
-corresponds_to("christmas_order_object.order.item[1]","christmas_simplepo.xmi/order/item[1]").
-same_as("christmas_order_object.order.item[0]","christmas_simplepo.xmi/order/item[0]").
-same_as("christmas_order_object.order.item[1]","christmas_simplepo.xmi/order/item[1]").
+corresponds_to("christmas_order_object.order.item[0]",
+               "christmas_simplepo.xmi/order/item[0]").
+corresponds_to("christmas_order_object.order.item[1]",
+               "christmas_simplepo.xmi/order/item[1]").
+same_as("christmas_order_object.order.item[0]",
+        "christmas_simplepo.xmi/order/item[0]").
+same_as("christmas_order_object.order.item[1]",
+        "christmas_simplepo.xmi/order/item[1]").
 
 %function declaration
 function(save_model).
@@ -157,9 +173,12 @@ fun_type(generate_code,([ecore_xmi,genmodel_xmi],[ecore_java_package])).
 fun_type(generate_code,([eclass_xmi,genclass_xmi], [ecore_java])).
 
 %function application
-fun_apply(save_model,([christmas_order_object],["christmas_simplepo.xmi"])).
-fun_apply(load_model,(["christmas_simplepo.xmi"],[christmas_order_object])).
-fun_apply(generate_code,(["SimplePO.ecore", "SimplePO.genmodel"],["com.example.po"])).
+fun_apply(save_model,(
+    [christmas_order_object],["christmas_simplepo.xmi"])).
+fun_apply(load_model,(
+    ["christmas_simplepo.xmi"],[christmas_order_object])).
+fun_apply(generate_code,(
+    ["SimplePO.ecore", "SimplePO.genmodel"],["com.example.po"])).
 
 % function application on fragment level
 fragment("SimplePO.genmodel/Item").
@@ -177,7 +196,9 @@ fun_apply(save_model,(["christmas_order_object.order"],["christmas_simplepo.xmi/
 fun_apply(save_model,(["christmas_order_object.order.item[0]"],["christmas_simplepo.xmi/order/item[0]"])).
 fun_apply(save_model,(["christmas_order_object.order.item[1]"],["christmas_simplepo.xmi/order/item[1]"])).
 fun_apply(generate_code,(["SimplePO.ecore/Item","SimplePO.genmodel/Item"],["Item.java"])).
-fun_apply(generate_code,(["SimplePO.ecore/PurchaseOrder","SimplePO.genmodel/PurchaseOrder"],["PurchaseOrder.java"])).
+fun_apply(generate_code,(
+    ["SimplePO.ecore/PurchaseOrder","SimplePO.genmodel/PurchaseOrder"]
+    ,["PurchaseOrder.java"])).
 
 %Triangle1
 language(simplepo_xmi).

@@ -13,7 +13,9 @@ system(X) :- technology(X).
 %shortcuts for demos
 part_ofT(A1,A1).
 part_ofT(A1,A2) :- part_of(A1,A2).
-part_ofT(A1,A3) :- part_of(A1,A2), part_ofT(A2,A3).
+part_ofT(A1,A3) :-
+    part_of(A1,A2),
+    part_ofT(A2,A3).
 
 %inference rules
 language(L) :- element_of(_,L).

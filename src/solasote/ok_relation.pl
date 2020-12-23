@@ -28,10 +28,18 @@ ok_relation(element_of(A,L)):-
   member((A,L),IsDs);
   member((A,L),OsRs)).
 
-% helper predicates
-
 ok_relation(subset_of(L1,L2)):-
-  language(L1), language(L2).
+  language(L1), language(L2),
+  not(subset_of(L2,L1)).
+
+ok_relation(subset_ofT(L1,L1)):-
+  language(L1).
+
+ok_relation(subset_ofT(L1,L2)):-
+  subset_of(L1,L2).
+
+ok_relation(subset_ofT(L1,L2)):-
+  subset_of(L1,L), subset_ofT(L,L2).
 
 ok_relation(fun_type(F,(Ds,Rs))):-
   function(F),
@@ -40,9 +48,10 @@ ok_relation(fun_type(F,(Ds,Rs))):-
 
 ok_relation(fun_apply(F,(IS,OS))):-
   function(F),
-  forall(member(I,IS),artifact(I)),
+  forall(member(I,IS), artifact(I)),
   forall(member(O,OS), artifact(O)),
-  fun_type(F,(DS,RS)), zip(IS,DS,IDs),
+  fun_type(F,(DS,RS)),
+  zip(IS,DS,IDs),
   forall(member((I,D),IDs),
     element_ofT(I,D)),
   zip(OS,RS,ORs),
@@ -52,21 +61,21 @@ ok_relation(fun_apply(F,(IS,OS))):-
 ok_relation(defines(A,E)):-
   artifact(A), entity(E).
 
-ok_relation(implement(X,Y)):-
-  (artifact(X);system(X)),
-  (function(Y);language(Y)).
+ok_relation(implement(X,Y)):-(
+  artifact(X);system(X)),(
+  function(Y);language(Y)).
 
 ok_relation(conforms_to(A1,A2)):-
   artifact(A1),artifact(A2),((
   defines(A2,L),element_of(A1,L));
-   forall(part_of(P1,A1),(
-     part_of(P2,A2),
-     conforms_to(P1,P2)))).
+  forall(part_of(P1,A1),(
+    part_of(P2,A2),
+    conforms_to(P1,P2)))).
 
 ok_relation(corresponds_to(A1,A2)):-
   artifact(A1),artifact(A2),
-  okDirected(corresponds_to(A1,A2)),
-  okDirected(corresponds_to(A2,A1)).
+  ok_directed(corresponds_to(A1,A2)),
+  ok_directed(corresponds_to(A2,A1)).
 
 ok_relation(uses(S,L)):-
   language(L), part_ofT(P,S),
@@ -87,12 +96,12 @@ ok_relation(complies_to(S,A)):-
   artifact(A), defines(A,C),
   (uses(S,C);facilitates(S,C)).
 
-okDirected(corresponds_to(A1,A2)):-
+ok_directed(corresponds_to(A1,A2)):-
   forall(part_of(P1,A1),(
     part_of(P2,A2),
     corresponds_to(P1,P2))),!.
 
-okDirected(corresponds_to(A1,A2)):-
+ok_directed(corresponds_to(A1,A2)):-
   not(part_of(_,A1);part_of(_,A2)),
   same_as(A1,A2).
 
