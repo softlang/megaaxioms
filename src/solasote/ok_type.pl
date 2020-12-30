@@ -15,12 +15,12 @@ ok_type(language(pdf)):- !.
 ok_type(language(java)):- !.
 ok_type(language(python)):- !.
 
-ok_type(language(L)):-(
-  defines(_,L); implement(_,L)).
+ok_type(language(L)):-
+  defines(_,L); implement(_,L).
 
 ok_type(function(F)):-
-  fun_type(F,_),(
-  defines(_,F);implement(_,F)).
+  fun_type(F,_),
+  (defines(_,F);implement(_,F)).
 
 ok_type(concept(C)):-
   defines(_,C).

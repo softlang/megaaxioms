@@ -93,16 +93,11 @@ implement(jvm,jvm_objects).
 
 %Conformance scenario set up fragments
 fragment("christmas_simplepo.xmi/order").
-element_of("christmas_simplepo.xmi/order",purchase_order_xmi).
 element_of("SimplePO.ecore/PurchaseOrder",eclass_xmi).
-defines("SimplePO.ecore/PurchaseOrder",purchase_order_xmi).
 fragment("christmas_simplepo.xmi/order/item[0]").
-element_of("christmas_simplepo.xmi/order/item[0]",purchase_order_item_xmi).
 fragment("christmas_simplepo.xmi/order/item[1]").
-element_of("christmas_simplepo.xmi/order/item[1]",purchase_order_item_xmi).
 fragment("SimplePO.ecore/Item").
 element_of("SimplePO.ecore/Item",eclass_xmi).
-defines("SimplePO.ecore/Item",purchase_order_item_xmi).
 implement(simplepo_app,simplepo_xmi).
 subset_of(purchase_order_xmi,xmi).
 subset_of(purchase_order_item_xmi,xmi).
@@ -115,6 +110,8 @@ conforms_to("christmas_simplepo.xmi","SimplePO.ecore").
 part_of("christmas_simplepo.xmi/order","christmas_simplepo.xmi").
 %part_of("SimplePO.ecore/PurchaseOrder","SimplePO.ecore"). is stated earlier.
 conforms_to("christmas_simplepo.xmi/order","SimplePO.ecore/PurchaseOrder").
+element_of("christmas_simplepo.xmi/order",purchase_order_xmi).
+defines("SimplePO.ecore/PurchaseOrder",purchase_order_xmi).
 part_of("christmas_simplepo.xmi/order/item[0]",
   "christmas_simplepo.xmi/order").
 part_of("christmas_simplepo.xmi/order/item[1]",
@@ -122,6 +119,9 @@ part_of("christmas_simplepo.xmi/order/item[1]",
 part_of("SimplePO.ecore/Item","SimplePO.ecore").
 conforms_to("christmas_simplepo.xmi/order/item[0]","SimplePO.ecore/Item").
 conforms_to("christmas_simplepo.xmi/order/item[1]","SimplePO.ecore/Item").
+defines("SimplePO.ecore/Item",purchase_order_item_xmi).
+element_of("christmas_simplepo.xmi/order/item[0]",purchase_order_item_xmi).
+element_of("christmas_simplepo.xmi/order/item[1]",purchase_order_item_xmi).
 
 % Meta-Conformance
 file(ecoremetamodel).
@@ -173,12 +173,12 @@ fun_type(generate_code,([ecore_xmi,genmodel_xmi],[ecore_java_package])).
 fun_type(generate_code,([eclass_xmi,genclass_xmi], [ecore_java])).
 
 %function application
-fun_apply(save_model,(
-    [christmas_order_object],["christmas_simplepo.xmi"])).
-fun_apply(load_model,(
-    ["christmas_simplepo.xmi"],[christmas_order_object])).
-fun_apply(generate_code,(
-    ["SimplePO.ecore", "SimplePO.genmodel"],["com.example.po"])).
+fun_apply(save_model,
+    ([christmas_order_object],["christmas_simplepo.xmi"])).
+fun_apply(load_model,
+    (["christmas_simplepo.xmi"],[christmas_order_object])).
+fun_apply(generate_code,
+    (["SimplePO.ecore", "SimplePO.genmodel"],["com.example.po"])).
 
 % function application on fragment level
 fragment("SimplePO.genmodel/Item").
@@ -195,15 +195,16 @@ element_of("PurchaseOrder.java",ecore_java).
 fun_apply(save_model,(["christmas_order_object.order"],["christmas_simplepo.xmi/order"])).
 fun_apply(save_model,(["christmas_order_object.order.item[0]"],["christmas_simplepo.xmi/order/item[0]"])).
 fun_apply(save_model,(["christmas_order_object.order.item[1]"],["christmas_simplepo.xmi/order/item[1]"])).
-fun_apply(generate_code,(["SimplePO.ecore/Item","SimplePO.genmodel/Item"],["Item.java"])).
-fun_apply(generate_code,(
-    ["SimplePO.ecore/PurchaseOrder","SimplePO.genmodel/PurchaseOrder"]
-    ,["PurchaseOrder.java"])).
+fun_apply(generate_code,
+  (["SimplePO.ecore/Item","SimplePO.genmodel/Item"],["Item.java"])).
+fun_apply(generate_code,
+  (["SimplePO.ecore/PurchaseOrder","SimplePO.genmodel/PurchaseOrder"]
+  ,["PurchaseOrder.java"])).
 
 %Triangle1
 language(simplepo_xmi).
-%element_of("christmas_simplepo.xmi",simplepo_xmi).
-defines("SimplePO.ecore",simplepo_xmi).
+%element_of("christmas_simplepo.xmi",simplepo_xmi). is stated earlier
+defines("SimplePO.ecore",simplepo_xmi). % the .ecore defines the set of valid instances
 %conforms_to("christmas_simplepo.xmi","SimplePO.ecore").
 
 %Concepts
@@ -214,6 +215,28 @@ uses(simplepo_app,emf_persistence).
 complies_to(simplepo_app,"https://www.omg.org/spec/XMI/2.5.1/PDF").
 facilitates(emf_persistence,xmiserialization).
 complies_to(emf_persistence,"https://www.omg.org/spec/XMI/2.5.1/PDF").
+
+% Language Usage with language members in line comments
+uses(simplepo_app,simplepo_xmi).
+%element_of("christmas_simplepo.xmi",simplepo_xmi). is stated earlier
+uses(simplepo_app,ecore_java).
+uses("Item.java",ecore_java).
+%element_of("Item.java",ecore_java). is stated earlier
+uses(emf,java).
+%element_of("org.eclipse.emf.ecore.EObject.java",java). is stated earlier
+
+%Technology usage
+technology(jet).
+concept(code_generation).
+defines("https://en.wikipedia.org/wiki/Code_generation_(compiler)"
+        ,code_generation).
+facilitates(jet,code_generation).
+uses(emf,jet).
+uses(emf,code_generation).
+
+%Artifact usage
+uses(simplepo_app,"org.eclipse.emf.ecore.EObject.java").
+uses("Item.java","org.eclipse.emf.ecore.EObject.java").
 
 % simplified definition of basic languages
 file("https://www.omg.org/spec/XMI/2.5.1/PDF").
@@ -234,6 +257,8 @@ file("https://docs.oracle.com/javase/specs/").
 element_of("https://docs.oracle.com/javase/specs/",html).
 defines("https://docs.oracle.com/javase/specs/",java).
 defines("https://docs.oracle.com/javase/specs/",java_package).
+artifact("https://en.wikipedia.org/wiki/Code_generation_(compiler)").
+element_of("https://en.wikipedia.org/wiki/Code_generation_(compiler)",html).
 
 % The EMF module demonstrates the use of every axiom from the paper.
 :- include("../../src/solasote/inference.pl").

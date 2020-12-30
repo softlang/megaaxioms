@@ -24,8 +24,8 @@ ok_relation(element_of(A,L)):-
   artifact(A), language(L),
   fun_type(F,(Ds,Rs)),
   fun_apply(F,(Is,Os)),
-  zip(Is,Ds,IsDs), zip(Os,Rs,OsRs),(
-  member((A,L),IsDs);
+  zip(Is,Ds,IsDs), zip(Os,Rs,OsRs),
+  (member((A,L),IsDs);
   member((A,L),OsRs)).
 
 ok_relation(subset_of(L1,L2)):-
@@ -61,9 +61,9 @@ ok_relation(fun_apply(F,(IS,OS))):-
 ok_relation(defines(A,E)):-
   artifact(A), entity(E).
 
-ok_relation(implement(X,Y)):-(
-  artifact(X);system(X)),(
-  function(Y);language(Y)).
+ok_relation(implement(X,Y)):-
+  (artifact(X);system(X)),
+  (function(Y);language(Y)).
 
 ok_relation(conforms_to(A1,A2)):-
   artifact(A1),artifact(A2),((
@@ -77,9 +77,14 @@ ok_relation(corresponds_to(A1,A2)):-
   ok_directed(corresponds_to(A1,A2)),
   ok_directed(corresponds_to(A2,A1)).
 
-ok_relation(uses(S,L)):-
-  language(L), part_ofT(P,S),
-  element_ofT(P,L).
+ok_directed(corresponds_to(A1,A2)):-
+  forall(part_of(P1,A1),(
+    part_of(P2,A2),
+    corresponds_to(P1,P2))),!.
+
+ok_directed(corresponds_to(A1,A2)):-
+  not(part_of(_,A1);part_of(_,A2)),
+  same_as(A1,A2).
 
 ok_relation(uses(S,T)):-
   technology(T), uses(S,C),
@@ -92,18 +97,20 @@ ok_relation(uses(S,C)):-
 ok_relation(facilitates(T,C)):-
   technology(T), concept(C).
 
-ok_relation(complies_to(S,A)):-
-  artifact(A), defines(A,C),
-  (uses(S,C);facilitates(S,C)).
+ok_relation(complies_to(E,A)):-
+  artifact(A), entity(E).
 
-ok_directed(corresponds_to(A1,A2)):-
-  forall(part_of(P1,A1),(
-    part_of(P2,A2),
-    corresponds_to(P1,P2))),!.
+ok_relation(uses(S1,S2)):-
+  system(S1), system(S2),
+  not(technology(S2)).
 
-ok_directed(corresponds_to(A1,A2)):-
-  not(part_of(_,A1);part_of(_,A2)),
-  same_as(A1,A2).
+ok_relation(uses(S,L)):-
+  language(L), part_ofT(P,S),
+  element_ofT(P,L).
+
+ok_relation(uses(S,A)):-
+  artifact(A),
+  (artifact(S); system(S)).
 
 zip([],[],[]).
 zip([X|XS],[Y|YS],[(X,Y)|ZS]) :-
