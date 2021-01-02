@@ -46,10 +46,6 @@ idealCorrespond(A1,A2):- not(part_of(_,A1)), A1==A2
   , forall(part_of(A2p,A2),(part_of(A1p,A1),corresponds_to(A2p,A1p))).
 corresponds_to(A1,A2):- idealCorrespond(A1,A2).
 
-% Utility rules for instantiating function types (languages)
-typecheck([],[]).
-typecheck([A|AS],[L|LS]):- element_of(A,L), typecheck(AS,LS).
-
 inputOf(IS,F) :- fun_apply(F,(IS,_)).
 outputOf(OS,F) :- fun_apply(F,(_,OS)).
 

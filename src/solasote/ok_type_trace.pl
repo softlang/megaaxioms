@@ -5,5 +5,6 @@ ok_type(reference(R)):-
   encodes(_,R), resolves_to(R,_).
 
 ok_type(trace(T)):-
-  forall((member(TUPLE,T),member(R,TUPLE)),
-  reference(R)).
+  forall(
+   (member(TUPLE,T),member(R,TUPLE)),
+   reference(R)).

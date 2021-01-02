@@ -145,9 +145,10 @@ part_of("christmas_order_object.purchaseOrder.item[1]","christmas_order_object.p
 element_of("christmas_order_object.purchaseOrder.item[1]",jvm_objects).
 same_as("christmas_order_object.purchaseOrder.item[1]","christmas_simplepo.xmi/PurchaseOrder/item[1]").
 
-%Correspondence - Traceable
+%Correspondence scenario
 corresponds_to(christmas_order_object,"christmas_simplepo.xmi").
-corresponds_to("christmas_order_object.purchaseOrder","christmas_simplepo.xmi/PurchaseOrder").
+corresponds_to("christmas_order_object.purchaseOrder",
+               "christmas_simplepo.xmi/PurchaseOrder").
 corresponds_to("christmas_order_object.purchaseOrder.item[0]",
                "christmas_simplepo.xmi/PurchaseOrder/item[0]").
 corresponds_to("christmas_order_object.purchaseOrder.item[1]",
