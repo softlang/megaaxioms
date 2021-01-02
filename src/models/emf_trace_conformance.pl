@@ -34,7 +34,6 @@ resolves_to(christmas_simplepo_item1_ref,"christmas_simplepo.xmi/PurchaseOrder/i
 resolves_to(simplepo_item_ref,"SimplePO.ecore/Item").
 
 % Refereces are encoded by the following artifacts
-
 encodes("christmas_simplepo.xmi/PurchaseOrder",christmas_simplepo_order_ref).
 encodes("christmas_simplepo.xmi/PurchaseOrder",simplepo_order_ref).
 
