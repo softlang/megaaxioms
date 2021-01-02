@@ -63,6 +63,6 @@ uses(W,C):- part_of(P,W),
       (element_of(P,C)
         ;uses(P,C)).
 
-uses(W,C):- part_of(P,W),
-    conforms_to(P,SPEC),
-    defines(SPEC,C).
+uses(W,C):-
+  concept(C), part_ofT(P,W),
+  complies_to(P,SPEC), defines(SPEC,C).

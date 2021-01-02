@@ -40,12 +40,8 @@ subset_of(ecore_java,java).
 subset_of(ecore_java_package,java_package).
 
 % Subset membership
-element_of("org.eclipse.emf.ecore",ecore_java_package).
-element_of("org.eclipse.emf.ecore.EObject.java",ecore_java).
-element_of("org.eclipse.emf.ecore.EPackage.java",ecore_java).
 element_of("SimplePO.ecore",ecore_xmi).
 element_of("SimplePO.genmodel",genmodel_xmi).
-element_of(christmas_order_object,jvm_objects).
 element_of("christmas_simplepo.xmi",simplepo_xmi).
 element_of("com.example.po",ecore_java_package).
 
@@ -189,8 +185,10 @@ part_of("SimplePO.genmodel/PurchaseOrder","SimplePO.genmodel").
 element_of("SimplePO.genmodel/PurchaseOrder",genclass_xmi).
 implement(emf,genclass_xmi).
 file("Item.java").
+part_of("Item.java",simplepo_app_model).
 element_of("Item.java",ecore_java).
 file("PurchaseOrder.java").
+part_of("PurchaseOrder.java",simplepo_app_model).
 element_of("PurchaseOrder.java",ecore_java).
 fun_apply(save_model,(["christmas_order_object.order"],["christmas_simplepo.xmi/order"])).
 fun_apply(save_model,(["christmas_order_object.order.item[0]"],["christmas_simplepo.xmi/order/item[0]"])).
@@ -212,7 +210,6 @@ concept(xmiserialization).
 defines("https://www.omg.org/spec/XMI/2.5.1/PDF",xmiserialization).
 uses(simplepo_app,xmiserialization).
 uses(simplepo_app,emf_persistence).
-complies_to(simplepo_app,"https://www.omg.org/spec/XMI/2.5.1/PDF").
 facilitates(emf_persistence,xmiserialization).
 complies_to(emf_persistence,"https://www.omg.org/spec/XMI/2.5.1/PDF").
 
@@ -226,17 +223,25 @@ uses(emf,java).
 %element_of("org.eclipse.emf.ecore.EObject.java",java). is stated earlier
 
 %Technology usage
-technology(jet).
 concept(code_generation).
+uses(simplepo_app,code_generation).
+technology(jet).
 defines("https://en.wikipedia.org/wiki/Code_generation_(compiler)"
         ,code_generation).
-facilitates(jet,code_generation).
 uses(emf,jet).
-uses(emf,code_generation).
+uses(simplepo_app,emf).
+facilitates(jet,code_generation).
+facilitates(emf,code_generation).
+complies_to(jet,"https://en.wikipedia.org/wiki/Code_generation_(compiler)").
+complies_to(emf,"https://en.wikipedia.org/wiki/Code_generation_(compiler)").
 
 %Artifact usage
 uses(simplepo_app,"org.eclipse.emf.ecore.EObject.java").
 uses("Item.java","org.eclipse.emf.ecore.EObject.java").
+
+% Superset conformance.
+conforms_to("SimplePO.ecore","https://www.omg.org/spec/XMI/2.5.1/PDF").
+conforms_to("SimplePO.genmodel","https://www.omg.org/spec/XMI/2.5.1/PDF").
 
 % simplified definition of basic languages
 file("https://www.omg.org/spec/XMI/2.5.1/PDF").
@@ -245,10 +250,7 @@ element_of("https://www.omg.org/spec/XMI/2.5.1/PDF",pdf).
 file("https://www.iso.org/standard/63534.html").
 element_of("https://www.iso.org/standard/63534.html",html).
 defines("https://www.iso.org/standard/63534.html",pdf).
-file("https://www.w3.org/XML/").
 language(html).
-element_of("https://www.w3.org/XML/",html).
-defines("https://www.w3.org/XML/",xml).
 defines("https://www.omg.org/spec/XMI/2.5.1/PDF",xmi).
 file("https://html.spec.whatwg.org/").
 element_of("https://html.spec.whatwg.org/",html).

@@ -67,7 +67,7 @@ ok_relation(implement(X,Y)):-
 
 ok_relation(conforms_to(A1,A2)):-
   artifact(A1),artifact(A2),((
-  defines(A2,L),element_of(A1,L));
+  defines(A2,L),element_ofT(A1,L));
   forall(part_of(P1,A1),(
     part_of(P2,A2),
     conforms_to(P1,P2)))).
@@ -87,12 +87,14 @@ ok_directed(corresponds_to(A1,A2)):-
   same_as(A1,A2).
 
 ok_relation(uses(S,T)):-
-  technology(T), uses(S,C),
-  facilitates(T,C).
+  technology(T), facilitates(T,C),
+  (uses(S,C);facilitates(S,C)).
 
 ok_relation(uses(S,C)):-
   concept(C), defines(A,C),
-  part_ofT(P,S), complies_to(P,A).
+  (part_ofT(P,S);
+  uses(S,T),part_ofT(P,T)),
+  complies_to(P,A).
 
 ok_relation(facilitates(T,C)):-
   technology(T), concept(C).
