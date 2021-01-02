@@ -88,10 +88,10 @@ implement(javac,java_package).
 implement(jvm,jvm_objects).
 
 %Conformance scenario set up fragments
-fragment("christmas_simplepo.xmi/order").
+fragment("christmas_simplepo.xmi/PurchaseOrder").
 element_of("SimplePO.ecore/PurchaseOrder",eclass_xmi).
-fragment("christmas_simplepo.xmi/order/item[0]").
-fragment("christmas_simplepo.xmi/order/item[1]").
+fragment("christmas_simplepo.xmi/PurchaseOrder/item[0]").
+fragment("christmas_simplepo.xmi/PurchaseOrder/item[1]").
 fragment("SimplePO.ecore/Item").
 element_of("SimplePO.ecore/Item",eclass_xmi).
 implement(simplepo_app,simplepo_xmi).
@@ -103,21 +103,21 @@ implement(emf,eclass_xmi).
 
 %Traceable Conformance
 conforms_to("christmas_simplepo.xmi","SimplePO.ecore").
-part_of("christmas_simplepo.xmi/order","christmas_simplepo.xmi").
+part_of("christmas_simplepo.xmi/PurchaseOrder","christmas_simplepo.xmi").
 %part_of("SimplePO.ecore/PurchaseOrder","SimplePO.ecore"). is stated earlier.
-conforms_to("christmas_simplepo.xmi/order","SimplePO.ecore/PurchaseOrder").
-element_of("christmas_simplepo.xmi/order",purchase_order_xmi).
+conforms_to("christmas_simplepo.xmi/PurchaseOrder","SimplePO.ecore/PurchaseOrder").
+element_of("christmas_simplepo.xmi/PurchaseOrder",purchase_order_xmi).
 defines("SimplePO.ecore/PurchaseOrder",purchase_order_xmi).
-part_of("christmas_simplepo.xmi/order/item[0]",
-  "christmas_simplepo.xmi/order").
-part_of("christmas_simplepo.xmi/order/item[1]",
-  "christmas_simplepo.xmi/order").
+part_of("christmas_simplepo.xmi/PurchaseOrder/item[0]",
+  "christmas_simplepo.xmi/PurchaseOrder").
+part_of("christmas_simplepo.xmi/PurchaseOrder/item[1]",
+  "christmas_simplepo.xmi/PurchaseOrder").
 part_of("SimplePO.ecore/Item","SimplePO.ecore").
-conforms_to("christmas_simplepo.xmi/order/item[0]","SimplePO.ecore/Item").
-conforms_to("christmas_simplepo.xmi/order/item[1]","SimplePO.ecore/Item").
+conforms_to("christmas_simplepo.xmi/PurchaseOrder/item[0]","SimplePO.ecore/Item").
+conforms_to("christmas_simplepo.xmi/PurchaseOrder/item[1]","SimplePO.ecore/Item").
 defines("SimplePO.ecore/Item",purchase_order_item_xmi).
-element_of("christmas_simplepo.xmi/order/item[0]",purchase_order_item_xmi).
-element_of("christmas_simplepo.xmi/order/item[1]",purchase_order_item_xmi).
+element_of("christmas_simplepo.xmi/PurchaseOrder/item[0]",purchase_order_item_xmi).
+element_of("christmas_simplepo.xmi/PurchaseOrder/item[1]",purchase_order_item_xmi).
 
 % Meta-Conformance
 file(ecoremetamodel).
@@ -134,28 +134,28 @@ conforms_to("SimplePO.ecore/PurchaseOrder",ecoremetamodel_eclass).
 conforms_to("SimplePO.ecore/Item",ecoremetamodel_eclass).
 
 %Correspondence scenario - Setup
-transient("christmas_order_object.order").
-part_of("christmas_order_object.order",christmas_order_object).
-element_of("christmas_order_object.order",jvm_objects).
-transient("christmas_order_object.order.item[0]").
-part_of("christmas_order_object.order.item[0]","christmas_order_object.order").
-element_of("christmas_order_object.order.item[0]",jvm_objects).
-transient("christmas_order_object.order.item[1]").
-part_of("christmas_order_object.order.item[1]","christmas_order_object.order").
-element_of("christmas_order_object.order.item[1]",jvm_objects).
-same_as("christmas_order_object.order.item[1]","christmas_simplepo.xmi/order/item[1]").
+transient("christmas_order_object.purchaseOrder").
+part_of("christmas_order_object.purchaseOrder",christmas_order_object).
+element_of("christmas_order_object.purchaseOrder",jvm_objects).
+transient("christmas_order_object.purchaseOrder.item[0]").
+part_of("christmas_order_object.purchaseOrder.item[0]","christmas_order_object.purchaseOrder").
+element_of("christmas_order_object.purchaseOrder.item[0]",jvm_objects).
+transient("christmas_order_object.purchaseOrder.item[1]").
+part_of("christmas_order_object.purchaseOrder.item[1]","christmas_order_object.purchaseOrder").
+element_of("christmas_order_object.purchaseOrder.item[1]",jvm_objects).
+same_as("christmas_order_object.purchaseOrder.item[1]","christmas_simplepo.xmi/PurchaseOrder/item[1]").
 
 %Correspondence - Traceable
 corresponds_to(christmas_order_object,"christmas_simplepo.xmi").
-corresponds_to("christmas_order_object.order","christmas_simplepo.xmi/order").
-corresponds_to("christmas_order_object.order.item[0]",
-               "christmas_simplepo.xmi/order/item[0]").
-corresponds_to("christmas_order_object.order.item[1]",
-               "christmas_simplepo.xmi/order/item[1]").
-same_as("christmas_order_object.order.item[0]",
-        "christmas_simplepo.xmi/order/item[0]").
-same_as("christmas_order_object.order.item[1]",
-        "christmas_simplepo.xmi/order/item[1]").
+corresponds_to("christmas_order_object.purchaseOrder","christmas_simplepo.xmi/PurchaseOrder").
+corresponds_to("christmas_order_object.purchaseOrder.item[0]",
+               "christmas_simplepo.xmi/PurchaseOrder/item[0]").
+corresponds_to("christmas_order_object.purchaseOrder.item[1]",
+               "christmas_simplepo.xmi/PurchaseOrder/item[1]").
+same_as("christmas_order_object.purchaseOrder.item[0]",
+        "christmas_simplepo.xmi/PurchaseOrder/item[0]").
+same_as("christmas_order_object.purchaseOrder.item[1]",
+        "christmas_simplepo.xmi/PurchaseOrder/item[1]").
 
 %function declaration
 function(save_model).
@@ -190,16 +190,23 @@ element_of("Item.java",ecore_java).
 file("PurchaseOrder.java").
 part_of("PurchaseOrder.java",simplepo_app_model).
 element_of("PurchaseOrder.java",ecore_java).
-fun_apply(save_model,(["christmas_order_object.order"],["christmas_simplepo.xmi/order"])).
-fun_apply(save_model,(["christmas_order_object.order.item[0]"],["christmas_simplepo.xmi/order/item[0]"])).
-fun_apply(save_model,(["christmas_order_object.order.item[1]"],["christmas_simplepo.xmi/order/item[1]"])).
+fun_apply(save_model,
+  (["christmas_order_object.purchaseOrder"],
+  ["christmas_simplepo.xmi/PurchaseOrder"])).
+fun_apply(save_model,
+  (["christmas_order_object.purchaseOrder.item[0]"],
+  ["christmas_simplepo.xmi/PurchaseOrder/item[0]"])).
+fun_apply(save_model,
+  (["christmas_order_object.purchaseOrder.item[1]"],
+  ["christmas_simplepo.xmi/PurchaseOrder/item[1]"])).
 fun_apply(generate_code,
-  (["SimplePO.ecore/Item","SimplePO.genmodel/Item"],["Item.java"])).
+  (["SimplePO.ecore/Item","SimplePO.genmodel/Item"],
+  ["Item.java"])).
 fun_apply(generate_code,
   (["SimplePO.ecore/PurchaseOrder","SimplePO.genmodel/PurchaseOrder"]
   ,["PurchaseOrder.java"])).
 
-%Triangle1
+% Definition of a subset
 language(simplepo_xmi).
 %element_of("christmas_simplepo.xmi",simplepo_xmi). is stated earlier
 defines("SimplePO.ecore",simplepo_xmi). % the .ecore defines the set of valid instances

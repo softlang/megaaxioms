@@ -17,13 +17,6 @@ resolves_to(generated_code_ref,"com.example.po").
 % the references in the trace can be extracted from the generator model
 encodes("SimplePO.genmodel",ecore_ref).
 encodes("SimplePO.genmodel",generated_code_ref).
+encodes("SimplePO.genmodel",genmodel_ref). % Every artifact encodes a reference to itself.
 refers_to("SimplePO.genmodel","SimplePO.ecore").
 refers_to("SimplePO.genmodel","com.example.po").
-
-% A trace log includes the reference to a generator model.
-file("generate_code.trace").
-encodes("generate_code.trace",genmodel_ref).
-encodes("generate_code.trace",ecore_ref).
-encodes("generate_code.trace",generated_code_ref).
-element_of("generate_code.trace",xml).
-conforms_to("generate_code.trace","https://www.w3.org/XML/").
